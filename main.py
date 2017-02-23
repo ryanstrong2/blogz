@@ -19,9 +19,9 @@ class BlogHandler(webapp2.RequestHandler):
             Get all posts by a specific user, ordered by creation date (descending).
             The user parameter will be a User object.
         """
-
+        userposts = Post.user().order('-created')
         # TODO - filter the query so that only posts by the given user
-        return None
+        return userposts.fetch(user=user, limit=limit, offset=offset)
 
     def get_user_by_name(self, username):
         """ Get a user object from the db, based on their username """
@@ -218,7 +218,7 @@ class SignupHandler(BlogHandler):
         verify = self.validate_verify(submitted_password, submitted_verify)
         email = self.validate_email(submitted_email)
 
-        errors = {}
+        errors = self.redirect('/404')
         existing_user = self.get_user_by_name(username)
         has_error = False
 
@@ -272,7 +272,6 @@ class LoginHandler(BlogHandler):
     def post(self):
         submitted_username = self.request.get("username")
         submitted_password = self.request.get("password")
-
         # get the user from the database
         user = self.get_user_by_name(submitted_username)
 

@@ -1,0 +1,37 @@
+{% extends 'base.html'  %}
+{% block content %}
+
+<title>Login</title>
+
+
+<form method="login">
+    <table>
+        <tr>
+            <td><label for = "username">Username</label></td>
+            <td>
+                <input name="username" type="text" value="{{username}}"
+                <span class="error">{{ errors.username_error }}</span>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="password">Password</label>
+            <td>
+                <input name="password" type="password">
+                <span class = "error">{{ errors.username_error}}</span>
+            </td>
+        </tr>
+
+                    <!-- <div>username</div>
+                    <input type="" name="username" value="{{username}}">
+                </label>
+                <label>
+                    <div>password</div>
+                    <password name="password"></password>
+                </label> -->
+        <!-- <label>
+            <div>confirm password</div>
+            <password name="verify"></password>
+        </label>             -->
+
+
+{% endblock %}
