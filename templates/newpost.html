@@ -14,7 +14,13 @@
         <textarea name="body">{{body}}</textarea>
     </label>
     <div class="error">{{ error }}</div>
-    <input type="submit">
+    <label>
+        
+        <input type = "hidden" name = "author" value = "post.author.username">
+
+        <!-- <input type = "text" name = "author" value = "post.author.username"> -->
+    </label>
+    <input type="submit" value="Submit Blog">
 </form>
 
 {% endblock %}

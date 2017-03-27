@@ -6,7 +6,7 @@
 <p class="post-body">{{ post.body }}</p>
 <!-- TODO add author w/ link to author's blog -->
 <p class="post-author">
-    written on {{ post.created.strftime('%Y-%m-%d') }}
+    written by <a href="/post/{{ post.author.username }}">{{ post.author.username }}</a> {{ post.author.username }} on {{ post.created.strftime('%Y-%m-%d') }}
 </p>
-
+                                                    <!-- {{post.aut}} -->
 {% endblock %}

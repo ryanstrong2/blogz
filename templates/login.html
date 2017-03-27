@@ -10,16 +10,20 @@
             <td><label for = "username">Username</label></td>
             <td>
                 <input name="username" type="text" value="{{username}}"
-                <span class="error">{{ errors.username_error }}</span>
+                <span class="error">{{ error.username_error }}</span>
             </td>
         </tr>
         <tr>
             <td><label for="password">Password</label>
             <td>
-                <input name="password" type="password">
-                <span class = "error">{{ errors.username_error}}</span>
+                <input name="password" type="password" value="{{password}}">
+                <span class = "error">{{ error.username_error}}</span>
             </td>
         </tr>
+    </table>
+    <input type="submit" value="log in">
+    <p><a href="/signup">Sign UP</a></p>
+</form>
 
                     <!-- <div>username</div>
                     <input type="" name="username" value="{{username}}">
