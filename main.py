@@ -222,13 +222,12 @@ class SignupHandler(BlogHandler):
         if existing_user:
             errors['username_error'] = "A user with that username already exists"
             has_error = True
+            self.response.out.write(response)
         elif (username and password and verify and (email is not None) ):
-
             # create new user object and store it in the database
             pw_hash = hashutils.make_pw_hash(username, password)
             user = User(username=username, pw_hash=pw_hash)
             user.put()
-
             # login our new user
             self.login_user(user)
         else:
@@ -259,19 +258,24 @@ class LoginHandler(BlogHandler):
         self.response.out.write(response)
 
     def get(self):
+
         self.render_login_form()
 
     def post(self):
         submitted_username = self.request.get("username")
         submitted_password = self.request.get("password")
         # get the user from the database
+
         user = self.get_user_by_name(submitted_username)
+        existing_user = self.get_user_by_name(submitted_username)
 
         if not user:
             self.render_login_form(error="Invalid username")
-        # elif not submitted_password:
-        #     self.render_login_form(error="Invalid password")
+
         elif hashutils.valid_pw(submitted_username, submitted_password, user.pw_hash):
+            pw_hash = hashutils.make_pw_hash(submitted_username,submitted_password)
+            user = User(username=submitted_username, pw_hash=pw_hash)
+            user.put()
             self.login_user(user)
             self.redirect('/blog/newpost')
         else:

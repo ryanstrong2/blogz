@@ -4,19 +4,20 @@
 <title>Login</title>
 
 
-<form method="login">
+<form method="post">
     <table>
         <tr>
             <td><label for = "username">Username</label></td>
             <td>
-                <input name="username" type="text" value="{{username}}"
-                <span class="error">{{ error.username_error }}</span>
+                <input name = "username" type="text" value="{{ username }}">
+                <span class = "error">{{ error.username_error }}</span>
             </td>
         </tr>
         <tr>
-            <td><label for="password">Password</label>
+            <td><label for="password">Password</label></td>
             <td>
-                <input name="password" type="password" value="{{password}}">
+                <input name="password" type="password" >
+                <!-- value="{{password}}"> -->
                 <span class = "error">{{ error.username_error}}</span>
             </td>
         </tr>
