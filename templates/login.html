@@ -3,40 +3,21 @@
 
 <title>Login</title>
 
-
 <form method="post">
-    <table>
-        <tr>
-            <td><label for = "username">Username</label></td>
-            <td>
-                <input name = "username" type="text" value="{{ username }}">
-                <span class = "error">{{ error.username_error }}</span>
-            </td>
-        </tr>
-        <tr>
-            <td><label for="password">Password</label></td>
-            <td>
-                <input name="password" type="password" >
-                <!-- value="{{password}}"> -->
-                <span class = "error">{{ error.username_error}}</span>
-            </td>
-        </tr>
-    </table>
+    <label>
+        <div>username</div>
+        <input type="text" name="username" value="{{username}}">
+    </label>
+    <label>
+        <div>password</div>
+        <input type="password" name="password">
+    </label>
+    <div class="error">{{ error }}</div>
+
     <input type="submit" value="log in">
     <p><a href="/signup">Sign UP</a></p>
 </form>
 
-                    <!-- <div>username</div>
-                    <input type="" name="username" value="{{username}}">
-                </label>
-                <label>
-                    <div>password</div>
-                    <password name="password"></password>
-                </label> -->
-        <!-- <label>
-            <div>confirm password</div>
-            <password name="verify"></password>
-        </label>             -->
 
 
 {% endblock %}

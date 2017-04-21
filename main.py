@@ -74,8 +74,6 @@ class BlogIndexHandler(BlogHandler):
     page_size = 5
     def get(self, username=""):
         """ """
-        # username= self.get_user_by_name(username)
-        # author = self.get_user_by_name(author)
         # If request is for a specific page, set page number and offset accordingly
         page = self.request.get("page")
         offset = 0
@@ -135,8 +133,6 @@ class NewPostHandler(BlogHandler):
                 title= title,
                 body= body,
                 author=self.user)
-                # author= author) works
-                # username = username)#self.user
             post.put()
 
             self.redirect("/blog/%s" % post.key().id())
@@ -148,13 +144,11 @@ class ViewPostHandler(BlogHandler):
 
     def get(self, id):
         """ Render a page with post determined by the id (via the URL/permalink) """
-        # author =self.request.get("author")
-        author = User.get_by_id(int(id))# User.get_by_id(int(id))
+        author = User.get_by_id(int(id))
         post = Post.get_by_id(int(id))
         if post:
             t = jinja_env.get_template("post.html")
             response = t.render(post=post)
-####            # response = t.render(post=post, author=author)
         else:
             error = "there is no post with id %s" % id
             t = jinja_env.get_template("404.html")
@@ -162,6 +156,10 @@ class ViewPostHandler(BlogHandler):
         self.response.out.write(response)
 
 class SignupHandler(BlogHandler):
+    def render_signup(self, submitted_username="", error=""):
+        t=jinja_env.get_template("signup.html")
+        response=t.render(error=error)
+        self.response.out.write(response)
 
     def validate_username(self, username):
         USER_RE = re.compile(r"^[a-zA-Z0-9_-]{3,20}$")
@@ -194,6 +192,7 @@ class SignupHandler(BlogHandler):
         t = jinja_env.get_template("signup.html")
         response = t.render(errors={})
         self.response.out.write(response)
+        # self.render_signup()
 
     def post(self):
         """
@@ -215,12 +214,15 @@ class SignupHandler(BlogHandler):
         verify = self.validate_verify(submitted_password, submitted_verify)
         email = self.validate_email(submitted_email)
 
-        errors = self.redirect('/404')
+        # error = self.redirect('/signup
+        errors = {}
         existing_user = self.get_user_by_name(username)
         has_error = False
 
         if existing_user:
-            errors['username_error'] = "A user with that username already exists"
+            # errors['username_error'] = "A user with that username already exists"
+
+            errors['username_error']= "A user with that username already exists"
             has_error = True
             self.response.out.write(response)
         elif (username and password and verify and (email is not None) ):
@@ -251,7 +253,7 @@ class SignupHandler(BlogHandler):
 class LoginHandler(BlogHandler):
     # TODO - The login code here is mostly set up for you, but there isn't a template to log in
 
-    def render_login_form(self, error=""):
+    def render_login_form(self,submitted_username="", error=""):
         """ Render the login form with or without an error, based on parameters """
         t = jinja_env.get_template("login.html")
         response = t.render(error=error)
@@ -279,7 +281,8 @@ class LoginHandler(BlogHandler):
             self.login_user(user)
             self.redirect('/blog/newpost')
         else:
-            self.render_login_form(error = "error Invalid password")
+            error = "error Invalid password"
+            self.render_login_form(submitted_username, error)
 
 
 
